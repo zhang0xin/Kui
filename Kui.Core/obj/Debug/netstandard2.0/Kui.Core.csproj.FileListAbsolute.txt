@@ -1,0 +1,9 @@
+d:\Documents\GitHub\Kui\Kui.Core\bin\Debug\netstandard2.0\Kui.Core.deps.json
+d:\Documents\GitHub\Kui\Kui.Core\bin\Debug\netstandard2.0\Kui.Core.dll
+d:\Documents\GitHub\Kui\Kui.Core\bin\Debug\netstandard2.0\Kui.Core.pdb
+d:\Documents\GitHub\Kui\Kui.Core\obj\Debug\netstandard2.0\Kui.Core.csprojAssemblyReference.cache
+d:\Documents\GitHub\Kui\Kui.Core\obj\Debug\netstandard2.0\Kui.Core.csproj.CoreCompileInputs.cache
+d:\Documents\GitHub\Kui\Kui.Core\obj\Debug\netstandard2.0\Kui.Core.AssemblyInfoInputs.cache
+d:\Documents\GitHub\Kui\Kui.Core\obj\Debug\netstandard2.0\Kui.Core.AssemblyInfo.cs
+d:\Documents\GitHub\Kui\Kui.Core\obj\Debug\netstandard2.0\Kui.Core.dll
+d:\Documents\GitHub\Kui\Kui.Core\obj\Debug\netstandard2.0\Kui.Core.pdb
