@@ -30,3 +30,6 @@ d:\Documents\GitHub\Kui\Kui.Website\obj\Debug\netcoreapp2.2\Kui.Website.Views.pd
 d:\Documents\GitHub\Kui\Kui.Website\obj\Debug\netcoreapp2.2\Kui.Website.csproj.CopyComplete
 d:\Documents\GitHub\Kui\Kui.Website\obj\Debug\netcoreapp2.2\Kui.Website.dll
 d:\Documents\GitHub\Kui\Kui.Website\obj\Debug\netcoreapp2.2\Kui.Website.pdb
+d:\Documents\GitHub\Kui\Kui.Website\obj\Debug\netcoreapp2.2\Razor\Views\Home\Test.g.cshtml.cs
+d:\Documents\GitHub\Kui\Kui.Website\obj\Debug\netcoreapp2.2\Razor\Views\Home\Item.g.cshtml.cs
+d:\Documents\GitHub\Kui\Kui.Website\obj\Debug\netcoreapp2.2\Razor\Views\Home\List.g.cshtml.cs

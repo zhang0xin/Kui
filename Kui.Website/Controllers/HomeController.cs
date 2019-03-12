@@ -15,7 +15,20 @@ namespace Kui.Website.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult List(int pageSize, int pageIndex, string path)
+        {
+            ViewBag.path = path;
+            ViewBag.pageSize = pageSize;
+            ViewBag.pageIndex = pageIndex;
+            return View();
+        }
+        public IActionResult Item(int id, string path)
+        {
+            ViewBag.path = path;
+            return View();
+        }
+
+        public IActionResult Privacy(string path)
         {
             return View();
         }

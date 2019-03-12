@@ -53,11 +53,21 @@ namespace Kui.Website
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            /* 
+            /Web/List/10/3/Category1/Category2
+            /Web/Details/104/Category1/Category2
+            */
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    name: "list",
+                    template: "{controller=Home}/{action=Index}");
+                routes.MapRoute(
+                    name: "list",
+                    template: "{controller=Home}/{action=List}/{pageSize}/{pageIndex}/{**path}");
+                routes.MapRoute(
+                    name: "list",
+                    template: "{controller=Home}/{action=Item}/{id}/{**path}");
             });
         }
     }
