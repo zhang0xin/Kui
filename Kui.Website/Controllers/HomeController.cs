@@ -25,6 +25,7 @@ namespace Kui.Website.Controllers
         public IActionResult Item(int id, string path)
         {
             ViewBag.path = path;
+            ViewBag.id = id;
             return View();
         }
 
