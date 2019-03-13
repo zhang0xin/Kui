@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Kui.Website.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,7 +31,7 @@ namespace Kui.Website
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            services.AddSingleton(typeof(KuiSiteService));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -60,14 +61,8 @@ namespace Kui.Website
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "list",
+                    name: "index",
                     template: "{controller=Home}/{action=Index}");
-                routes.MapRoute(
-                    name: "list",
-                    template: "{controller=Home}/{action=List}/{pageSize}/{pageIndex}/{**path}");
-                routes.MapRoute(
-                    name: "list",
-                    template: "{controller=Home}/{action=Item}/{id}/{**path}");
             });
         }
     }

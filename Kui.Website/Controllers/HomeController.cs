@@ -5,18 +5,36 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Kui.Website.Models;
+using Kui.Website.Services;
+using Kui.Core.Node;
 
 namespace Kui.Website.Controllers
 {
     public class HomeController : Controller
     {
+        KuiSiteService _kuiSiteService;
+        public HomeController(KuiSiteService kuiSiteService)
+        {
+            _kuiSiteService = kuiSiteService;
+        }
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult List(int pageSize, int pageIndex, string path)
+        [Route("/Home/List/{**path}")]
+        public IActionResult List(string path)
         {
+            var nodes = _kuiSiteService.GetSubNodes<PageNode>(path);
+
+            ViewBag.path = path;
+            return View();
+        }
+        [Route("/Home/{path}/Page/{pageSize}/{pageIndex}")]
+        public IActionResult Page(int pageSize, int pageIndex, string path)
+        {
+            var nodes = _kuiSiteService.GetSubNodes<PageNode>(path);
+
             ViewBag.path = path;
             ViewBag.pageSize = pageSize;
             ViewBag.pageIndex = pageIndex;
