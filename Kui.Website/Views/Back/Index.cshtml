@@ -1,6 +1,8 @@
 @{
     Layout = "_Html";
 }
+<div id='app'>
+
 <div class="tile is-ancestor">
 <div class="tile is-parent">
 <div class="tile is-child">
@@ -52,14 +54,23 @@
     </div>
 
     <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <a class="button is-primary">
-            <strong>Sign up</strong>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link"> 用户 </a>
+
+        <div class="navbar-dropdown is-right">
+          <a class="navbar-item">
+            Overview
           </a>
-          <a class="button is-light">
-            Log in
+          <a class="navbar-item">
+            Elements
           </a>
+          <a class="navbar-item">
+            Components
+          </a>
+          <hr class="navbar-divider">
+          <div class="navbar-item">
+            Version 0.7.4
+          </div>
         </div>
       </div>
     </div>
@@ -71,52 +82,57 @@
 
 <div class="tile is-ancestor">
     <div class="tile is-3 is-parent">
-        <div class="box is-child">
-            <aside class="menu">
-            <p class="menu-label">
-                General
-            </p>
-            <ul class="menu-list">
-                <li><a>Dashboard</a></li>
-                <li><a>Customers</a></li>
-            </ul>
-            <p class="menu-label">
-                Administration
-            </p>
-            <ul class="menu-list">
-                <li><a>Team Settings</a></li>
-                <li>
-                <a class="is-active">Manage Your Team</a>
-                <ul>
-                    <li><a>Members</a></li>
-                    <li><a>Plugins</a></li>
-                    <li><a>Add a member</a></li>
+        <div class="box is-child" style='width: 100%'>
+            <div class="menu">
+              <template v-for='category in menu'>
+                <div class="menu-label">
+                  {{category.text}}
+                </div>
+                <ul v-if='category.children' class="menu-list">
+                    <li v-for='item in category.children'>
+                      <a v-on:click='currPage=item.component'>{{item.text}}</a>
+                    </li>
                 </ul>
-                </li>
-                <li><a>Invitations</a></li>
-                <li><a>Cloud Storage Environment Settings</a></li>
-                <li><a>Authentication</a></li>
-            </ul>
-            <p class="menu-label">
-                Transactions
-            </p>
-            <ul class="menu-list">
-                <li><a>Payments</a></li>
-                <li><a>Transfers</a></li>
-                <li><a>Balance</a></li>
-            </ul>
-            </aside>
+              </template>
+            </div>
         </div>
     </div>
     <div class="tile is-parent">
-        <div class="tile is-child box">
-            <p class="title">One</p>
-            <p>Suspendisse varius ligula in molestie lacinia. Maecenas varius eget ligula a sagittis. 
-                Pellentesque interdum, nisl nec interdum maximus, augue diam porttitor lorem, et sollicitudin 
-                felis neque sit amet erat. Maecenas imperdiet felis nisi, fringilla luctus felis hendrerit sit 
-                amet. Aenean vitae gravida diam, finibus dignissim turpis. Sed eget varius ligula, at volutpat 
-                tortor.
-            </p>
+        <div class="tile is-child box" style='width: 100%'>
+            <component v-bind:is="currPage"></component>
+            <p>Suspendisse varius ligula in molestie lacinia. </p>
         </div>
     </div>
 </div>
+
+</div>
+
+<script>
+var vm = new Vue({
+  el: '#app',
+  data: {
+    currPage: null,
+    menu: []
+  },
+  mounted: function(){
+    var self = this
+    axios.get('/Api/GetSiteNodes').then(function(response){
+      self.menu = [
+        {
+          text: '内容管理',
+          children: response.data 
+        }, {
+          text: '网站管理',
+          children: [
+            {
+              text: '编辑列表'
+            }
+          ]
+        }, {
+          text: '权限管理'
+        }
+      ]
+    })
+  }
+})
+</script>

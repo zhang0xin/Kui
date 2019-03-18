@@ -32,6 +32,7 @@ namespace Kui.Website
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddSingleton(typeof(KuiSiteService));
+            services.AddSingleton(typeof(ConfigService));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
