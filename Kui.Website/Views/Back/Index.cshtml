@@ -90,7 +90,14 @@
                 </div>
                 <ul v-if='category.children' class="menu-list">
                     <li v-for='item in category.children'>
-                      <a v-on:click='currPage=item.component'>{{item.text}}</a>
+                      <router-link :to="'/category/'+item.key">{{item.text}}</router-link>
+                      <ul v-if='item.children'>
+                        <li v-for='subitem in item.children'>
+                          <router-link :to="'/category/'+item.key+'-'+subitem.key">
+                            {{subitem.text}}
+                          </router-link>
+                        </li>
+                      </ul>
                     </li>
                 </ul>
               </template>
@@ -99,8 +106,7 @@
     </div>
     <div class="tile is-parent">
         <div class="tile is-child box" style='width: 100%'>
-            <component v-bind:is="currPage"></component>
-            <p>Suspendisse varius ligula in molestie lacinia. </p>
+            <router-view></router-view>
         </div>
     </div>
 </div>
@@ -108,10 +114,21 @@
 </div>
 
 <script>
+const NewHtmlPage = {
+  template: ` 
+    <div>
+      new html page : {{ $route.params.path }}
+      <manage-page></manage-page>
+    </div>
+  `
+}
+const routes = [
+  { path: '/category/:path', component: NewHtmlPage }
+]
 var vm = new Vue({
+  router : new VueRouter({ routes }),
   el: '#app',
   data: {
-    currPage: null,
     menu: []
   },
   mounted: function(){

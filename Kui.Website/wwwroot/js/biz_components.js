@@ -1,3 +1,8 @@
-Vue.component('test', {
-    template: '<b>component test</b>'
+Vue.component('manage-page', {
+    template: `
+        <b>manage page</b>
+    `
+})
+Vue.component('new-html', {
+    template: '<b>new html page</b>'
 })
