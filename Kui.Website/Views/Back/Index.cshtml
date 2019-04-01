@@ -93,7 +93,7 @@
                       <router-link :to="'/category/'+item.key">{{item.text}}</router-link>
                       <ul v-if='item.children'>
                         <li v-for='subitem in item.children'>
-                          <router-link :to="'/category/'+item.key+'-'+subitem.key">
+                          <router-link :to="'/manage/'+item.key+'-'+subitem.key">
                             {{subitem.text}}
                           </router-link>
                         </li>
@@ -114,16 +114,19 @@
 </div>
 
 <script>
-const NewHtmlPage = {
+const ManagePage = {
   template: ` 
-    <div>
-      new html page : {{ $route.params.path }}
-      <manage-page></manage-page>
-    </div>
+      <manage-page :path='$route.params.path'></manage-page>
+  `
+}
+const EditPage = {
+  template: ` 
+      <edit-page></edit-page>
   `
 }
 const routes = [
-  { path: '/category/:path', component: NewHtmlPage }
+  { path: '/manage/:path', component: ManagePage },
+  { path: '/edit/:path', component: EditPage }
 ]
 var vm = new Vue({
   router : new VueRouter({ routes }),
