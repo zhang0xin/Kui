@@ -1,0 +1,17 @@
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\obj\Debug\netcoreapp2.2\Kui.Core.Test.csprojAssemblyReference.cache
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\obj\Debug\netcoreapp2.2\Kui.Core.Test.csproj.CoreCompileInputs.cache
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\obj\Debug\netcoreapp2.2\Kui.Core.Test.AssemblyInfoInputs.cache
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\obj\Debug\netcoreapp2.2\Kui.Core.Test.AssemblyInfo.cs
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\bin\Debug\netcoreapp2.2\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\bin\Debug\netcoreapp2.2\xunit.runner.reporters.netcoreapp10.dll
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\bin\Debug\netcoreapp2.2\xunit.runner.utility.netcoreapp10.dll
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\bin\Debug\netcoreapp2.2\Kui.Core.Test.deps.json
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\bin\Debug\netcoreapp2.2\Kui.Core.Test.runtimeconfig.json
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\bin\Debug\netcoreapp2.2\Kui.Core.Test.runtimeconfig.dev.json
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\bin\Debug\netcoreapp2.2\Kui.Core.Test.dll
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\bin\Debug\netcoreapp2.2\Kui.Core.Test.pdb
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\bin\Debug\netcoreapp2.2\Kui.Core.dll
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\bin\Debug\netcoreapp2.2\Kui.Core.pdb
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\obj\Debug\netcoreapp2.2\Kui.Core.Test.csproj.CopyComplete
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\obj\Debug\netcoreapp2.2\Kui.Core.Test.dll
+d:\个人文件\程序源码\GitHub\Kui\Kui.Core.Test\obj\Debug\netcoreapp2.2\Kui.Core.Test.pdb

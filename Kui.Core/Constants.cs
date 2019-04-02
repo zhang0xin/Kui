@@ -10,8 +10,7 @@ namespace Kui.Core
 {
     public static class Constants 
     {
-        public static readonly string DllPath = 
-            Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+        public static readonly string DllPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         public static readonly string SqliteFileName=Path.Combine(DllPath, "db.sqlite");
         static Constants() { }
     }
