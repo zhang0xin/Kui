@@ -13,8 +13,16 @@ namespace Kui.Core.Test
         {
             var accessor = new SqliteDataAccesser();
             Assert.True(File.Exists(Constants.SqliteFileName));
-            PageNode node = new PageNode();
-            //accessor.SaveSiteNode(node);
+            PageNode node = new PageNode()
+            {
+                Key = "key",
+                Caption = "caption",
+                Description = "description",
+                Path = "path",
+                Title = "title",
+                Content = "content"
+            };
+            accessor.SaveSiteNode(node);
         }
     }
 }
