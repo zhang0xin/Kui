@@ -10,5 +10,6 @@ namespace Kui.Core.Persistence
     public interface DataAccesser 
     {
         void SaveSiteNode(BaseNode node);
+        IEnumerable<T> GetSiteNode<T>(string path) where T:BaseNode;
     }
 }
