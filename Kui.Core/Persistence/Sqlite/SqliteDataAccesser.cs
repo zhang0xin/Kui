@@ -67,24 +67,60 @@ namespace Kui.Core.Persistence.Sqlite
                         "description=@description, path=@path ", node);
                 }
 
-                var type = node.GetType();
-                var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-                conn.Execute("delete from node_props where base_node_key=@baseNodeKey", new {baseNodeKey = node.Key});
+                var props = node.GetType().GetProperties(
+                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+                var datas = conn.Query(
+                    "select name from node_props where base_node_key = @baseNodeKey", 
+                    new {baseNodeKey = node.Key});
+                var dicActions = new Dictionary<string, string>();
+
+                foreach(var data in datas)
+                {
+                    dicActions[data.name] = "delete";
+                }
                 foreach(var prop in props)
                 {
-                    var value = prop.GetValue(node);
-                    conn.Execute(
-                        "insert into node_props (key, base_node_key, name, value, type) "+
-                        "values(@key, @baseNodeKey, @name, @value, @type)",
-                        new
-                        {
-                            key = IdentityGenerator.NewGuid(),
-                            baseNodeKey = node.Key,
-                            name = prop.Name,
-                            value = value,
-                            type = value.GetType().ToString() 
-                        }
-                    );
+                    if(dicActions.ContainsKey(prop.Name)) dicActions[prop.Name] = "update";
+                    else dicActions[prop.Name] = "insert";
+                }
+                foreach(var prop in props)
+                {
+                    if (dicActions[prop.Name] == "update")
+                    {
+                        var value = prop.GetValue(node);
+                        conn.Execute(
+                            "update node_props set value=@value, type=@type " +
+                            "where base_node_key=@baseNodeKey and name=@name",
+                            new
+                            {
+                                baseNodeKey = node.Key,
+                                name = prop.Name,
+                                value = value,
+                                type = value.GetType().ToString() 
+                            }
+                        );
+                    }
+                    else if (dicActions[prop.Name] == "insert")
+                    {
+                        var value = prop.GetValue(node);
+                        conn.Execute(
+                            "insert into node_props (key, base_node_key, name, value, type) "+
+                            "values(@key, @baseNodeKey, @name, @value, @type)",
+                            new
+                            {
+                                key = IdentityGenerator.NewGuid(),
+                                baseNodeKey = node.Key,
+                                name = prop.Name,
+                                value = value,
+                                type = value.GetType().ToString() 
+                            }
+                        );
+                    }
+                    else if (dicActions[prop.Name] == "delete")
+                    {
+                        conn.Execute("delete from node_props where base_node_key=@baseNodeKey and name=@name",
+                            new { baseNodeKey = node.Key, name = prop.Name });
+                    }
                 }
             }
         }

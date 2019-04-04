@@ -30,6 +30,13 @@ namespace Kui.Core.Test
             var node2 = accessor.GetSiteNode<PageNode>("/path").FirstOrDefault();
             Assert.Equal(node.Key, node2.Key);
             Assert.Equal(node.Content, node2.Content);
+
+            node.Caption = "new caption";
+            node.Title = "new title";
+            accessor.SaveSiteNode(node);
+            node2 = accessor.GetSiteNode<PageNode>("/path").FirstOrDefault();
+            Assert.Equal(node.Caption, node2.Caption);
+            Assert.Equal(node.Title, node2.Title);
         }
     }
 }
