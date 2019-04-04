@@ -5,7 +5,12 @@
     "tasks": [
         {
             "label": "build",
-            "command": "dotnet build",
+            "command": "dotnet",
+            "args": [
+                "build",
+                "${workspaceFolder}",
+                "/property:GenerateFullPaths=true"
+            ],
             "type": "shell",
             "group": "build",
             "presentation": {
