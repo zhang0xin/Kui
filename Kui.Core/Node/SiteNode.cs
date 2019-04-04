@@ -1,6 +1,6 @@
 namespace Kui.Core.Node
 {
-    public class BaseNode
+    public class SiteNode
     {
         public string Key {get; set;}
         public string Caption {get; set;}

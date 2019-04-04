@@ -30,9 +30,9 @@ namespace Kui.Core
             _dataAccesser = new SqliteDataAccesser();
         }
 
-        public IEnumerable<BaseNode> GetSubNodes(string path)
+        public IEnumerable<SiteNode> GetSubNodes(string path)
         {
-            return GetSubNodes<BaseNode>(path);
+            return GetSubNodes<SiteNode>(path);
         }
         public IEnumerable<T> GetSubNodes<T>(string path)
         {

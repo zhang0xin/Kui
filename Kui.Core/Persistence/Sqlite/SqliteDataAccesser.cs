@@ -21,7 +21,7 @@ namespace Kui.Core.Persistence.Sqlite
             }
         }
 
-        public IEnumerable<T> GetSiteNode<T>(string path) where T:BaseNode
+        public IEnumerable<T> GetSiteNode<T>(string path) where T:SiteNode
         {
             using (var conn = CreateConnection())
             {
@@ -38,7 +38,8 @@ namespace Kui.Core.Persistence.Sqlite
                 foreach(var node in nodes)
                 {
                     var type = node.GetType();
-                    var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+                    var props = type.GetProperties(
+                        BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
                     foreach(var prop in props)
                     {
                         prop.SetValue(node, dicProps[$"{node.Key}:{prop.Name}"]);
@@ -48,11 +49,11 @@ namespace Kui.Core.Persistence.Sqlite
             }
         }
 
-        public void SaveSiteNode(BaseNode node)
+        public void SaveSiteNode(SiteNode node)
         {
             using(var conn = CreateConnection())
             {
-                var queryNode = conn.QuerySingleOrDefault<BaseNode>(
+                var queryNode = conn.QuerySingleOrDefault<SiteNode>(
                     "select * from base_node where key = @key", node );
                 if(queryNode == null)
                 {

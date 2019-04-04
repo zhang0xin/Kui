@@ -1,4 +1,4 @@
-Vue.component('manage-page', {
+Vue.component('managePage', {
     props: ['path'],
     template: `
     <div>
@@ -7,15 +7,20 @@ Vue.component('manage-page', {
     </div>
     `
 })
-Vue.component('edit-page', {
+Vue.component('editPage', {
     props: ['path'],
     data: function(){
         return {
-            
         }
     },
     template: `
     <div>
+        <div class='field'>
+            <label class='label'>类别</label>
+            <div class='control'>
+                <input class='input' type='text' placeholder='类别' :value='path' disabled />
+            </div>
+        </div>
         <div class='field'>
             <label class='label'>标题</label>
             <div class='control'>

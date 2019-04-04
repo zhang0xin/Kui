@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Kui.Core.Node;
 using Kui.Website.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Kui.Website.Controllers 
 {
@@ -17,13 +19,23 @@ namespace Kui.Website.Controllers
             _configService = configService;
         }
 
-        public IActionResult GetSiteNodes()
+        public IActionResult GetSiteNodeTree()
         {
             return Json(_configService.GetSiteNodes());
         }
-        public IActionResult AddSiteNode(BaseNode node)
+        public IActionResult GetSiteNode(string path)
         {
             throw new NotImplementedException();
+        }
+        public IActionResult SaveSiteNode()
+        {
+            var param = ReadJsonParam();
+            return Json(param);
+        }
+        dynamic ReadJsonParam()
+        {
+            string json = (new StreamReader(Request.Body)).ReadToEnd();
+            return JsonConvert.DeserializeObject(json);
         }
     }
 }
