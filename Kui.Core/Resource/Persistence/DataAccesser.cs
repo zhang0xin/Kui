@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Kui.Core.Node;
+using Kui.Core.Resource.Node;
 
-namespace Kui.Core.Persistence 
+namespace Kui.Core.Resource.Persistence 
 {
     public interface DataAccesser 
     {

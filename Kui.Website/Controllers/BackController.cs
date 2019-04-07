@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Kui.Website.Models;
 using Kui.Website.Services;
-using Kui.Core.Node;
+using Kui.Core.Resource.Node;
 
 namespace Kui.Website.Controllers 
 {

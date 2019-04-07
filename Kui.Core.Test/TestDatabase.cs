@@ -1,7 +1,7 @@
 using System;
 using Xunit;
-using Kui.Core.Persistence.Sqlite;
-using Kui.Core.Node;
+using Kui.Core.Resource.Persistence.Sqlite;
+using Kui.Core.Resource.Node;
 using System.IO;
 using System.Linq;
 
@@ -18,7 +18,6 @@ namespace Kui.Core.Test
 
             var node = new PageNode()
             {
-                Key = "key",
                 Caption = "caption",
                 Description = "description",
                 Path = "/path",
@@ -26,17 +25,22 @@ namespace Kui.Core.Test
                 Content = "content"
             };
             accessor.SaveSiteNode(node);
+            var node2 = new PageNode()
+            {
+                Caption = "caption2",
+                Description = "description2",
+                Path = "/path",
+                Title = "title2",
+                Content = "content2"
+            };
+            accessor.SaveSiteNode(node2);
 
-            var node2 = accessor.GetSiteNode<PageNode>("/path").FirstOrDefault();
-            Assert.Equal(node.Key, node2.Key);
-            Assert.Equal(node.Content, node2.Content);
-
-            node.Caption = "new caption";
-            node.Title = "new title";
-            accessor.SaveSiteNode(node);
-            node2 = accessor.GetSiteNode<PageNode>("/path").FirstOrDefault();
-            Assert.Equal(node.Caption, node2.Caption);
-            Assert.Equal(node.Title, node2.Title);
+            var nodes = accessor.GetSiteNode<PageNode>("/path");
+            Assert.Equal(2, nodes.Count());
+            Assert.Equal(node.Key, nodes.Last().Key);
+            Assert.Equal(node.Content, nodes.Last().Content);
+            Assert.Equal(node2.Key, nodes.First().Key);
+            Assert.Equal(node2.Content, nodes.First().Content);
         }
     }
 }

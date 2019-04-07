@@ -31,7 +31,7 @@ namespace Kui.Website
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddSingleton(typeof(KuiSiteService));
+            services.AddSingleton(typeof(ResourceService));
             services.AddSingleton(typeof(ConfigService));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

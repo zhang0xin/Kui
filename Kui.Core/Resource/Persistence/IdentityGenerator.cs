@@ -1,6 +1,6 @@
 using System;
 
-namespace Kui.Core.Persistence
+namespace Kui.Core.Resource.Persistence
 {
     public class IdentityGenerator
     {

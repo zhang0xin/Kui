@@ -1,5 +1,5 @@
 
-namespace Kui.Core.Node
+namespace Kui.Core.Resource.Node
 {
     public class PageNode : SiteNode
     {

@@ -4,24 +4,19 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Kui.Core;
-using Kui.Core.Node;
+using Kui.Core.Resource;
+using Kui.Core.Resource.Node;
 
 namespace Kui.Website.Services 
 {
-    public class KuiSiteService 
+    public class ResourceService 
     {
-        KuiSite _kuiSite;
-        public KuiSiteService()
+        public ResourceService()
         {
-            _kuiSite = KuiSite.Singleton;
         }
-        public IEnumerable<SiteNode> GetSubNodes(string path)
+        public IEnumerable<T> GetSubNodes<T>(string path) where T:SiteNode
         {
-            return GetSubNodes<SiteNode>(path);
-        }
-        public IEnumerable<T> GetSubNodes<T>(string path)
-        {
-            return _kuiSite.GetSubNodes<T>(path);
+            return ResourceManager.Get<T>(path);
         }
     }
 }

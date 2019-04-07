@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Kui.Core.Node;
+using Kui.Core.Resource.Node;
 using Kui.Website.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -14,9 +14,11 @@ namespace Kui.Website.Controllers
     public class ApiController : Controller
     {
         ConfigService _configService;
-        public ApiController(ConfigService configService)
+        ResourceService _resourceService;
+        public ApiController(ConfigService configService, ResourceService resourceService)
         {
             _configService = configService;
+            _resourceService = resourceService;
         }
 
         public IActionResult GetSiteNodeTree()
@@ -25,7 +27,7 @@ namespace Kui.Website.Controllers
         }
         public IActionResult GetSiteNode(string path)
         {
-            throw new NotImplementedException();
+            return Json(_resourceService.GetSubNodes<SiteNode>(path));
         }
         public IActionResult SaveSiteNode()
         {

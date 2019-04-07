@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.Reflection;
 using Dapper;
-using Kui.Core.Node;
+using Kui.Core.Resource.Node;
 
-namespace Kui.Core.Persistence.Sqlite 
+namespace Kui.Core.Resource.Persistence.Sqlite 
 {
     public class SqliteDataAccesser : DataAccesser 
     {
@@ -26,10 +26,12 @@ namespace Kui.Core.Persistence.Sqlite
             using (var conn = CreateConnection())
             {
                 var nodes = conn.Query<T>(
-                    "select * from base_node where path = @path", new{ path });
+                    "select * from base_node where path = @path "+
+                    "order by update_time desc, create_time desc", new{ path });
                 var keys = nodes.Select(n=> n.Key);
+
                 var dataProps = conn.Query(
-                    "select * from node_props where base_node_key in (@keys)", new {keys});
+                    "select * from node_props where base_node_key in @keys", new {keys});
                 var dicProps = new Dictionary<string, object>();
                 foreach(var prop in dataProps)
                 {
@@ -53,19 +55,20 @@ namespace Kui.Core.Persistence.Sqlite
         {
             using(var conn = CreateConnection())
             {
-                var queryNode = conn.QuerySingleOrDefault<SiteNode>(
-                    "select * from base_node where key = @key", node );
-                if(queryNode == null)
+                if(node.Key == 0)
                 {
+                    node.Key = IdentityGenerator.NewGuid();
+                    node.CreateTime = DateTime.Now;
                     conn.Execute(
-                        "insert into base_node (key, caption, description, path) "+
-                        "values (@key, @caption, @description, @path)", node);
+                        "insert into base_node (key, create_time, caption, description, path) "+
+                        "values (@key, @createTime, @caption, @description, @path)", node);
                 }
                 else
                 {
+                    node.UpdateTime = DateTime.Now;
                     conn.Execute(
-                        "update base_node set key=@key, caption=@caption, "+
-                        "description=@description, path=@path ", node);
+                        "update base_node set create_time=@createTime, caption=@caption, "+
+                        "description=@description, path=@path where key=@key", node);
                 }
 
                 var props = node.GetType().GetProperties(
@@ -133,20 +136,24 @@ namespace Kui.Core.Persistence.Sqlite
         void CreateSchema()
         {
             var sql = @"
-                CREATE TABLE base_node
+                create table base_node
                 (
-                    key         varchar(255)    PRIMARY KEY,
-                    path        varchar(255)    NOT NULL,
-                    caption     varchar(255)    NOT NULL,
-                    description varchar(255)
+                    key             integer     primary key, 
+                    create_time     text,
+                    update_time     text,
+        
+                    path            text        not null,
+                    caption         text        not null,
+                    description     text        
                 );
-                CREATE TABLE node_props
+                create table node_props
                 (
-                    key             INTEGER         PRIMARY KEY,
-                    base_node_key   varchar(255)    NOT NULL, 
-                    name            varchar(255)    NOT NULL,
-                    value           varchar(255)    NOT NULL,
-                    type            varchar(255)    NOT NULL
+                    key             integer     primary key,
+
+                    base_node_key   integer     not null, 
+                    name            text        not null,
+                    value           text        not null,
+                    type            text        not null
                 );
             ";
             var connection = CreateConnection();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Kui.Core.Config;
+using Kui.Core.Resource.Config;
 using Microsoft.Extensions.Configuration;
 
 namespace Kui.Website.Services 
