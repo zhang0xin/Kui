@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kui.Website.Controllers 
 {
-    public class FontController 
+    public class FrontController 
     {
     }
 }
