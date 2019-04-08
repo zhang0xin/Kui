@@ -14,9 +14,17 @@ namespace Kui.Website.Services
         public ResourceService()
         {
         }
-        public IEnumerable<T> GetSubNodes<T>(string path) where T:SiteNode
+        public IEnumerable<T> Get<T>(string path) where T:SiteNode
         {
             return ResourceManager.Get<T>(path);
+        }
+        public void Save<T>(T node) where T:SiteNode
+        {
+            ResourceManager.Save(node);
+        }
+        public void Remove(string path)
+        {
+            ResourceManager.Remove(path);
         }
     }
 }

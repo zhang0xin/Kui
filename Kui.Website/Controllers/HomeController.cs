@@ -25,7 +25,7 @@ namespace Kui.Website.Controllers
         [Route("/Home/List/{**path}")]
         public IActionResult List(string path)
         {
-            var nodes = _resourceService.GetSubNodes<PageNode>(path);
+            var nodes = _resourceService.Get<PageNode>(path);
 
             ViewBag.path = path;
             return View();
@@ -33,7 +33,7 @@ namespace Kui.Website.Controllers
         [Route("/Home/{path}/Page/{pageSize}/{pageIndex}")]
         public IActionResult Page(int pageSize, int pageIndex, string path)
         {
-            var nodes = _resourceService.GetSubNodes<PageNode>(path);
+            var nodes = _resourceService.Get<PageNode>(path);
 
             ViewBag.path = path;
             ViewBag.pageSize = pageSize;

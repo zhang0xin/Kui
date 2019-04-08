@@ -13,8 +13,10 @@ namespace Kui.Core.Resource.Persistence.Sqlite
 {
     public class SqliteDataAccesser : DataAccesser 
     {
-        public SqliteDataAccesser()
+        string PathSeparator {get; set;}
+        public SqliteDataAccesser(string pathSeparator = "/")
         {
+            PathSeparator = pathSeparator;
             if(!File.Exists(Constants.SqliteFileName))
             {
                 CreateSchema();
@@ -25,9 +27,15 @@ namespace Kui.Core.Resource.Persistence.Sqlite
         {
             using (var conn = CreateConnection())
             {
-                var nodes = conn.Query<T>(
-                    "select * from base_node where path = @path "+
-                    "order by update_time desc, create_time desc", new{ path });
+                var sql = "select * from base_node where path = @path";
+                object param = new {path};
+                if (path.EndsWith(PathSeparator))
+                {
+                    sql = "select * from base_node where path like @path1 and path not like @path2";
+                    param = new{ path1=$"{path}_%", path2="{path}_%/%"};
+                }
+                sql += " order by update_time desc, create_time desc";
+                var nodes = conn.Query<T>( sql, param);
                 var keys = nodes.Select(n=> n.Key);
 
                 var dataProps = conn.Query(
@@ -126,6 +134,30 @@ namespace Kui.Core.Resource.Persistence.Sqlite
                             new { baseNodeKey = node.Key, name = prop.Name });
                     }
                 }
+            }
+        }
+        public void RemoveSiteNode(string path)
+        {
+            using(var conn = CreateConnection())
+            {
+                var pathmode = $"{path}%";
+                var nodes = conn.Query<SiteNode>(
+                    "select * from base_node where path like @path " +
+                    "order by update_time desc, create_time desc", 
+                    new { path = pathmode });
+                var keys = nodes.Select(n=> n.Key);
+                conn.Execute(
+                    "delete from base_node where path like @path;"+
+                    "delete from node_props where base_node_key in @keys", 
+                    new{path = pathmode, keys});
+            }
+        }
+        public void RemoveSiteNode(ulong key)
+        {
+            using(var conn = CreateConnection())
+            {
+                conn.Execute("delete from base_node where key = @key;"+
+                    "delete from node_props where base_node_key = @key;", new{key});
             }
         }
 

@@ -11,5 +11,6 @@ namespace Kui.Core.Resource.Persistence
     {
         void SaveSiteNode(SiteNode node);
         IEnumerable<T> GetSiteNode<T>(string path) where T:SiteNode;
+        void RemoveSiteNode(string path);
     }
 }

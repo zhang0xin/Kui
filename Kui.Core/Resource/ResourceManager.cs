@@ -19,7 +19,7 @@ namespace Kui.Core.Resource
         }
         public static void Remove(string path)
         {
-            throw new NotImplementedException();
+            accessor.RemoveSiteNode(path);
         }
         public static IEnumerable<T> Query<T>()
         {

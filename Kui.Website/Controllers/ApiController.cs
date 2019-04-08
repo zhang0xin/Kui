@@ -27,7 +27,7 @@ namespace Kui.Website.Controllers
         }
         public IActionResult GetSiteNode(string path)
         {
-            return Json(_resourceService.GetSubNodes<SiteNode>(path));
+            return Json(_resourceService.Get<SiteNode>(path));
         }
         public IActionResult SaveSiteNode()
         {
