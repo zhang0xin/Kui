@@ -8,7 +8,7 @@ namespace Kui.Core.Resource
 {
     public class ResourceManager
     {
-        static DataAccesser accessor = new SqliteDataAccesser();
+        static DataAccesser accessor = new SqliteDataAccesser("-");
         public static IEnumerable<T> Get<T>(string path) where T:SiteNode
         {
             return accessor.GetSiteNode<T>(path);

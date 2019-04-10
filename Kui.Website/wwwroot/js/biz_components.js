@@ -1,3 +1,22 @@
+var api = {
+    methods:{
+        getSiteNode: function(path){
+            axios.get("/Api/GetSiteNode", {
+                params: {
+                    path: path
+                }
+            }).then(function(response){
+
+            })
+        },
+        saveSiteNode: function(node){
+            axios.post("/Api/SaveSiteNode", node).then(function(response){
+                console.log(response)
+            })
+        }
+    }
+}
+
 Vue.component('managePage', {
     props: ['path'],
     template: `
@@ -8,9 +27,24 @@ Vue.component('managePage', {
     `
 })
 Vue.component('editPage', {
+    mixins: [api],
     props: ['path'],
     data: function(){
         return {
+            node: {
+                path: '',
+                title: '',
+                content: ''
+            }
+        }
+    },
+    methods: {
+        save: function(){
+            var param = {
+                type : 'PageNode',
+                data : this.node
+            }
+            this.saveSiteNode(param)
         }
     },
     template: `
@@ -24,18 +58,18 @@ Vue.component('editPage', {
         <div class='field'>
             <label class='label'>标题</label>
             <div class='control'>
-                <input class='input' type='text' placeholder='标题' />
+                <input v-model='node.title' class='input' type='text' placeholder='标题' />
             </div>
         </div>
         <div class='field'>
-            <label class='label'>描述</label>
+            <label class='label'>内容</label>
             <div class='control'>
-                <textarea class='textarea' placeholder='描述' />
+                <textarea v-model='node.content' class='textarea' placeholder='描述' />
             </div>
         </div>
         <div class='field is-grouped'>
             <div class='control'>
-                <button class='button is-primary'>保存</button>
+                <button v-on:click='save' class='button is-primary'>保存</button>
             </div>
             <div class='control'>
                 <button class='button'>取消</button>
