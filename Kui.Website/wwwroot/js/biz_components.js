@@ -32,7 +32,6 @@ Vue.component('editPage', {
     data: function(){
         return {
             node: {
-                path: '',
                 title: '',
                 content: ''
             }
@@ -42,6 +41,7 @@ Vue.component('editPage', {
         save: function(){
             var param = {
                 type : 'PageNode',
+                parentPath: this.path,
                 data : this.node
             }
             this.saveSiteNode(param)

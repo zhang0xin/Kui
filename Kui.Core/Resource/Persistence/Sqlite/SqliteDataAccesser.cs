@@ -13,7 +13,7 @@ namespace Kui.Core.Resource.Persistence.Sqlite
 {
     public class SqliteDataAccesser : DataAccesser 
     {
-        string PathSeparator {get; set;}
+        public string PathSeparator {get; set;}
         public SqliteDataAccesser(string pathSeparator = "/")
         {
             PathSeparator = pathSeparator;
@@ -63,6 +63,7 @@ namespace Kui.Core.Resource.Persistence.Sqlite
         {
             using(var conn = CreateConnection())
             {
+                node.UpdateTime = DateTime.Now;
                 if(node.Key == 0)
                 {
                     node.Key = IdentityGenerator.NewGuid();
@@ -73,7 +74,6 @@ namespace Kui.Core.Resource.Persistence.Sqlite
                 }
                 else
                 {
-                    node.UpdateTime = DateTime.Now;
                     conn.Execute(
                         "update base_node set create_time=@createTime, caption=@caption, "+
                         "description=@description, path=@path where key=@key", node);
@@ -175,7 +175,7 @@ namespace Kui.Core.Resource.Persistence.Sqlite
                     update_time     text,
         
                     path            text        not null,
-                    caption         text        not null,
+                    caption         text,
                     description     text        
                 );
                 create table node_props

@@ -14,6 +14,10 @@ namespace Kui.Website.Services
         public ResourceService()
         {
         }
+        public string NewChildPath(string parentPath)
+        {
+            return ResourceManager.NewChildPath(parentPath);
+        }
         public IEnumerable<T> Get<T>(string path) where T:SiteNode
         {
             return ResourceManager.Get<T>(path);

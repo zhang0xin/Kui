@@ -8,7 +8,12 @@ namespace Kui.Core.Resource
 {
     public class ResourceManager
     {
-        static DataAccesser accessor = new SqliteDataAccesser("-");
+        public static DataAccesser accessor = new SqliteDataAccesser("-");
+
+        public static string NewChildPath(string parentPath)
+        {
+            return $"{parentPath}{accessor.PathSeparator}{IdentityGenerator.NewGuid()}";
+        }
         public static IEnumerable<T> Get<T>(string path) where T:SiteNode
         {
             return accessor.GetSiteNode<T>(path);
@@ -28,6 +33,10 @@ namespace Kui.Core.Resource
     }
     public class ResourceManager<T> where T:SiteNode
     {
+        public string NewChildPath(string parentPath)
+        {
+            return ResourceManager.NewChildPath(parentPath);
+        }
         public IEnumerable<T> Get(string path)
         {
             return ResourceManager.Get<T>(path);
