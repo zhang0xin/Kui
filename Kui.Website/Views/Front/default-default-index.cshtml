@@ -1,0 +1,40 @@
+@{
+    Layout = "_Html";
+}
+@model Kui.Website.Models.IndexModel
+@section head{
+    <title>@Model.Title</title>
+}
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container">
+      <div class="tile is-ancestor">
+        <div class="tile is-2">
+            <img src='@Model.Banner.Logo' style='width:112px; height:28px' />
+        </div>
+        <div class="tile is-vertical">
+            <h1 class="title">
+                @Model.Banner.Title
+            </h1>
+            <h2 class="subtitle">
+                @Model.Banner.Subtitle
+            </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="navbar is-primary">
+    <div class="container">
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                @foreach(var item in Model.Menu.MenuItems)
+                {
+                    <a class='navbar-item' href='@item.Href'>
+                        @item.Caption
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
