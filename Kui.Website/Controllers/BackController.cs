@@ -24,7 +24,7 @@ namespace Kui.Website.Controllers
         {
             var node = _configService.GetNode(path);
             dynamic model = CreateModelByNode(node); 
-            return View();
+            return View(model);
         }
     }
 }
