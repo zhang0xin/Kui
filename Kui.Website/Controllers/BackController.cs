@@ -10,15 +10,20 @@ using Kui.Core.Resource.Node;
 
 namespace Kui.Website.Controllers 
 {
-    public class BackController : Controller
+    public class BackController : BaseController
     {
-        ConfigService _configService;
-        public BackController(ConfigService configService)
+        public BackController(ConfigService configService) : base(configService)
         {
-            _configService = configService;
         }
         public IActionResult Index()
         {
+            return View();
+        }
+        [Route("/Back/Manage/{path}")]
+        public IActionResult Edit(string path)
+        {
+            var node = _configService.GetNode(path);
+            dynamic model = CreateModelByNode(node); 
             return View();
         }
     }

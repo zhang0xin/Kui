@@ -26,7 +26,7 @@ namespace Kui.Website.Controllers
 
         public IActionResult GetSiteNodeTree()
         {
-            return Json(_configService.GetSiteNodes());
+            return Json(_configService.GetNodes());
         }
         public IActionResult GetSiteNode(string path)
         {

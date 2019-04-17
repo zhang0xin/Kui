@@ -14,6 +14,8 @@ namespace Kui.Core.Resource.Config
     {
         public string Key {get; set;}
         public string Text {get; set;}
+        public string Type {get; set;}
+
         public ResNode[] Children {get; set;}
     }
 }
