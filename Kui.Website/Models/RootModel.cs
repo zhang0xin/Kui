@@ -12,6 +12,8 @@ namespace Kui.Website.Models
         public BannerModel Banner {get; set;} = new BannerModel();
         //[Group(Label="导航菜单")]
         public List<ItemModel> MenuItems {get; set;} = new List<ItemModel>();
+        //[PagedList(...)]
+        //public PagedList<ItemModel> News {get; set;} = new PagedList<ItemModel>()
 
         public MenuModel Menu {get; set;} = new MenuModel();
         public CarouselModel Carousel {get; set;} = new CarouselModel();
