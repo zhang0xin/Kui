@@ -1,11 +1,13 @@
+@using Microsoft.AspNetCore.Html
+@model Kui.Website.Models.EditModel
 @{
     Layout = "_Html";
 }
-@model Kui.Website.Models.EditModel
+
 @functions{
-    void GenerateInputs(IList<Element> ele)
+    IHtmlContent GenerateInputs(IList<Element> elements)
     {
-        @Html.Partial("FieldText", "model datas");
+        return Html.Partial("FieldText", "model datas");
     }
 }
 @GenerateInputs(Model.Elements)
