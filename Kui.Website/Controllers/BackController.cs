@@ -25,16 +25,13 @@ namespace Kui.Website.Controllers
         {
             var node = _configService.GetNode(path);
             dynamic model = CreateModelByNode(node); // todo : load datas 
-            EditModel editModel = PrepareEditModel(model);
+            var editModel = new EditModel();
+            editModel.Root.Name = node.Key;
+            editModel.Root.Label = node.Text;
+            PrepareElement(editModel.Root, model);
             return View(editModel);
         }
-        EditModel PrepareEditModel(Object model)
-        {
-            var editModel = new EditModel();
-            PrepareElement(editModel.Elements, model);
-            return editModel;
-        }
-        void PrepareElement(IList<Element> items, object obj)
+        void PrepareElement(Group group, object obj)
         {
             Type type = obj.GetType();
 
@@ -48,15 +45,15 @@ namespace Kui.Website.Controllers
                     var typeAttr = attr as TypeAttribute;
                     if (attr is GroupAttribute)
                     {
-                        var group = new Group(){Label = typeAttr.Label};
-                        PrepareElement(group.Children, prop.GetValue(obj));
-                        items.Add(group);
+                        var subgroup = new Group(){Name = prop.Name, Label = typeAttr.Label};
+                        PrepareElement(subgroup, prop.GetValue(obj));
+                        group.AddChild(subgroup);
                     }
                     else if (attr is FieldAttribute)
                     {
-                        var field = new Field{Label = typeAttr.Label};
+                        var field = new Field{Name = prop.Name, Label = typeAttr.Label};
                         field.Value = prop.GetValue(obj) as string;
-                        items.Add(field);
+                        group.AddChild(field);
                     }
                 }
             }

@@ -5,9 +5,38 @@
 }
 
 @functions{
-    IHtmlContent GenerateInputs(IList<Element> elements)
+    IHtmlContent GenerateInputs(Group group, Action<HtmlContentBuilder> footer)
     {
-        return Html.Partial("FieldText", "model datas");
+        var builder = new HtmlContentBuilder();
+        builder.AppendHtmlLine("<div class='card'>");
+        builder.AppendHtmlLine($"<div class='card-header'><p class='card-header-title'>{group.Label}</p></div>");
+        builder.AppendHtmlLine("<div class='card-content'>");
+        foreach(var element in group.Children)
+        {
+            if (element is Group)
+            {
+                builder.AppendHtml(GenerateInputs(element as Group, null));
+            }
+            else if (element is Field)
+            {
+                builder.AppendHtml(Html.Partial("FieldText", element));
+            }
+        }
+        builder.AppendHtmlLine("</div>");
+        if(footer != null)
+        {
+            builder.AppendHtml("<footer class='card-footer'>");
+            footer(builder);
+            builder.AppendHtml("</footer>");
+        }
+        builder.AppendHtmlLine("</div>");
+        return builder;
     }
 }
-@GenerateInputs(Model.Elements)
+
+@GenerateInputs(Model.Root, builder=>{
+    builder.AppendHtmlLine(@"
+        <a class='card-footer-item'>取消</a>
+        <a class='card-footer-item'>保存</a>
+    ");
+});

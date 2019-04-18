@@ -1,1 +1,7 @@
-Text Field View : @Model
+@model Kui.Website.Models.Field
+<div class="field">
+  <label class="label">@Model.Label</label>
+  <div class="control">
+    <input id="@Model.Path" class="input" type="text" placeholder="@Model.Label" value="@Model.Value" >
+  </div>
+</div>

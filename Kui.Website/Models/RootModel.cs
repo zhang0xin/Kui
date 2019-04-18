@@ -5,14 +5,19 @@ namespace Kui.Website.Models
 {
     public class RootModel
     {
-        [Text(Label="标题", MinLength=5, MaxLength=20)]
+        [Text(Label="浏览器标题", MinLength=5, MaxLength=20)]
         public string Title {get; set;} = "";
 
         [Group(Label="横幅")]
         public BannerModel Banner {get; set;} = new BannerModel();
+        //[Group(Label="导航菜单")]
+        public List<ItemModel> MenuItems {get; set;} = new List<ItemModel>();
+
         public MenuModel Menu {get; set;} = new MenuModel();
         public CarouselModel Carousel {get; set;} = new CarouselModel();
         public Dictionary<string, CategoryModel> Categories {get; set;} = new Dictionary<string, CategoryModel>();
+
+        [Group(Label="页脚")]
         public FooterModel Footer {get; set;} = new FooterModel();
     }
     public class BannerModel
@@ -36,8 +41,13 @@ namespace Kui.Website.Models
     }
     public class FooterModel
     {
+        [Text(Label="版权", MinLength=5, MaxLength=20)]
         public string Copyright {get; set;} = "";
+
+        [Text(Label="备案号", MinLength=5, MaxLength=20)]
         public string RecordNumber {get; set;} = "";
+
+        [Text(Label="地址", MinLength=5, MaxLength=20)]
         public string Address {get; set;} = "";
     }
     
