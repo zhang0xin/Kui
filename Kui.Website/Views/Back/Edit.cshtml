@@ -1,4 +1,11 @@
 @{
     Layout = "_Html";
 }
-@Html.Partial("FieldText", "model datas");
+@model Kui.Website.Models.EditModel
+@functions{
+    void GenerateInputs(IList<Element> ele)
+    {
+        @Html.Partial("FieldText", "model datas");
+    }
+}
+@GenerateInputs(Model.Elements)

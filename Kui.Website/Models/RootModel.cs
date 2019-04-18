@@ -1,10 +1,14 @@
 using System.Collections.Generic;
+using Kui.Core.Convert;
 
 namespace Kui.Website.Models
 {
     public class RootModel
     {
+        [Text(Label="标题", MinLength=5, MaxLength=20)]
         public string Title {get; set;} = "";
+
+        [Group(Label="横幅")]
         public BannerModel Banner {get; set;} = new BannerModel();
         public MenuModel Menu {get; set;} = new MenuModel();
         public CarouselModel Carousel {get; set;} = new CarouselModel();
@@ -13,8 +17,13 @@ namespace Kui.Website.Models
     }
     public class BannerModel
     {
+        [Text(Label="标志", MinLength=5, MaxLength=20)]
         public string Logo {get; set;} = "";
+
+        [Text(Label="标题", MinLength=5, MaxLength=20)]
         public string Title {get; set;} = "";
+
+        [Text(Label="副标题", MinLength=5, MaxLength=20)]
         public string Subtitle {get; set;} = "";
     }
     public class MenuModel
