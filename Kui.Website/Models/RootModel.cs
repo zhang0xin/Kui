@@ -10,8 +10,8 @@ namespace Kui.Website.Models
 
         [Group(Label="横幅")]
         public BannerModel Banner {get; set;} = new BannerModel();
-        //[Group(Label="导航菜单")]
-        public List<ItemModel> MenuItems {get; set;} = new List<ItemModel>();
+        [List(Label="导航菜单"), Group]
+        public List<LinkModel> MenuItems {get; set;} = new List<LinkModel>();
         //[PagedList(...)]
         //public PagedList<ItemModel> News {get; set;} = new PagedList<ItemModel>()
 
@@ -56,6 +56,11 @@ namespace Kui.Website.Models
     public class CategoryModel : ItemModel
     {
         public List<ItemModel> Items {get; set;} = new List<ItemModel>();
+    }
+    public class LinkModel
+    {
+        public string Text {get; set;} = ""; 
+        public string Href {get; set;} = ""; 
     }
     public class ItemModel
     {

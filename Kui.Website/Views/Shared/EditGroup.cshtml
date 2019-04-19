@@ -1,0 +1,21 @@
+@model Kui.Website.Models.Group
+<div class='card'>
+    <div class='card-header'><p class='card-header-title'>@Model.Label</p></div>
+    <div class='card-content'>
+        @foreach(var element in Model.Elements)
+        {
+            @if(element is Group)
+            {
+                @Html.Partial("EditGroup", element);
+            }
+            else if (element is List)
+            {
+                @Html.Partial("EditList", element);
+            }
+            else if (element is Field)
+            {
+                @Html.Partial("EditText", element);
+            }
+        }
+    </div>
+</div>

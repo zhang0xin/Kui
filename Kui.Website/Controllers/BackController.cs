@@ -31,33 +31,51 @@ namespace Kui.Website.Controllers
             PrepareElement(editModel.Root, model);
             return View(editModel);
         }
-        void PrepareElement(Group group, object obj)
+        void PrepareElement(Combination comb, object obj)
         {
-            Type type = obj.GetType();
-
-            var props = type.GetProperties();
-            foreach(var prop in props)
+            var props = obj.GetType().GetProperties();
+            foreach (var prop in props)
             {
                 var attrs = prop.GetCustomAttributes(typeof(TypeAttribute), true);
-                if (attrs.Length == 0) continue;
-                foreach(var attr in attrs) 
+                var attr = attrs.FirstOrDefault();
+                if (attr == null) continue;
+
+                var typeAttr = attr as TypeAttribute;
+                if (attr is GroupAttribute)
                 {
-                    var typeAttr = attr as TypeAttribute;
-                    if (attr is GroupAttribute)
-                    {
-                        var subgroup = new Group(){Name = prop.Name, Label = typeAttr.Label};
-                        PrepareElement(subgroup, prop.GetValue(obj));
-                        group.AddChild(subgroup);
-                    }
-                    else if (attr is FieldAttribute)
-                    {
-                        var field = new Field{Name = prop.Name, Label = typeAttr.Label};
-                        field.Value = prop.GetValue(obj) as string;
-                        group.AddChild(field);
-                    }
+                    var subgroup = new Group() { Name = prop.Name, Label = typeAttr.Label };
+                    PrepareElement(subgroup, prop.GetValue(obj));
+                    comb.AddElement(subgroup);
+                }
+                if (attr is ListAttribute)
+                {
+                    var sublist = new List() { Name = prop.Name, Label = typeAttr.Label };
+                    PrepareElement(sublist, prop.GetValue(obj));
+                    comb.AddElement(sublist);
+                }
+                else if (attr is FieldAttribute)
+                {
+                    var field = new Field { Name = prop.Name, Label = typeAttr.Label };
+                    field.Value = prop.GetValue(obj) as string;
+                    comb.AddElement(field);
                 }
             }
-        }
 
+            // if comb is list do this
+            var items = obj as IEnumerable<object>;
+            foreach(var item in items)
+            {
+                /* 
+                //object has attr prop
+                if(group)
+                {
+                }
+                // simple type
+                else if (field)
+                {
+                }
+                */
+            }
+        }
     }
 }

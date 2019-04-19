@@ -11,7 +11,7 @@ namespace Kui.Website.Models
     {
         public string Name {get; set;}
         public string Label {get; set;}
-        public Group Parent {get; set;}
+        public Combination Parent {get; set;}
         public string Path 
         {
             get 
@@ -27,21 +27,28 @@ namespace Kui.Website.Models
             }
         } 
     }
-    public class Group : Element
+    public abstract class Combination : Element
     {
-        List<Element> _children = new List<Element>();
-        public IEnumerable<Element> Children 
+        protected List<Element> _elements = new List<Element>();
+        public IEnumerable<Element> Elements 
         {
             get
             {
-                return _children;
+                return _elements;
             }
         }
-        public void AddChild(Element ele)
+        public void AddElement(Element ele)
         {
-            _children.Add(ele);
+            _elements.Add(ele);
             ele.Parent = this;
         }
+    }
+    public class List : Combination 
+    {
+        public Element ExampleItem {get; set;}
+    }
+    public class Group : Combination
+    {
     }
     public class Field : Element
     {
