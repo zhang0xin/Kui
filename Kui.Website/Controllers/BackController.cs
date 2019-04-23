@@ -8,6 +8,7 @@ using Kui.Website.Models;
 using Kui.Website.Services;
 using Kui.Core.Resource.Node;
 using Kui.Core.Convert;
+using System.Reflection;
 
 namespace Kui.Website.Controllers 
 {
@@ -30,6 +31,49 @@ namespace Kui.Website.Controllers
             editModel.Root.Label = node.Text;
             PrepareElement(editModel.Root, model);
             return View(editModel);
+        }
+        Element ConvertToElementTree(string propName, object propValue, object[] attrs)
+        {
+            var attr = attrs.FirstOrDefault();
+            if (attr == null) return null;
+
+            var typeAttr = attr as TypeAttribute;
+            if (attr is ListAttribute)
+            {
+                var itemAttr = attrs[1];
+                var list = new List() { 
+                    Name = propName, Label = typeAttr.Label 
+                };
+                var items = propValue as IEnumerable<object>;
+                var idx = 0;
+                foreach(var item in items)
+                {
+                    list.AddElement(ConvertToElementTree($"#{idx}", item, new object[]{itemAttr}));
+                    idx++;
+                }
+                var itemType = items.GetType().GetGenericArguments()[0];
+                var exampleItem = itemType.Assembly.CreateInstance(itemType.ToString());
+                list.ExampleItem = ConvertToElementTree($"", exampleItem, new object[]{itemAttr});
+                return list;
+            }
+            else if (attr is GroupAttribute)
+            {
+                var group = new Group() { Name = propName, Label = typeAttr.Label };
+                var subprops = propValue.GetType().GetProperties();
+                foreach(var subprop in subprops)
+                {
+                    var subattrs = subprop.GetCustomAttributes(typeof(TypeAttribute), true);
+                    group.AddElement(ConvertToElementTree(subprop.Name, subprop.GetValue(propValue), subattrs));
+                }
+                return group;
+            }
+            else if (attr is FieldAttribute)
+            {
+                var field = new Field { Name = propName, Label = typeAttr.Label };
+                field.Value = propValue as string;
+                return field;
+            }
+            return null;
         }
         void PrepareElement(Combination comb, object obj)
         {
