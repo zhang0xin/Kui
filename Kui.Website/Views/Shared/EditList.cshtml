@@ -1,8 +1,9 @@
-@model Kui.Website.Models.List
+@using Kui.Core.Convert
+@model Kui.Core.Convert.List
 <div class='card'>
     <div class='card-header'><p class='card-header-title'>@Model.Label</p></div>
     <div class='card-content'>
-        @foreach(var element in Model.Elements)
+        @foreach(var element in Model.Items)
         {
             @if(element is Group)
             {
