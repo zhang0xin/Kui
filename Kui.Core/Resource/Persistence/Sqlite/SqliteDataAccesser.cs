@@ -23,7 +23,7 @@ namespace Kui.Core.Resource.Persistence.Sqlite
             }
         }
 
-        public IEnumerable<T> GetSiteNode<T>(string path) where T:SiteNode
+        public IEnumerable<T> GetSiteNode<T>(string path) where T:ResourceNode
         {
             using (var conn = CreateConnection())
             {
@@ -59,7 +59,7 @@ namespace Kui.Core.Resource.Persistence.Sqlite
             }
         }
 
-        public void SaveSiteNode(SiteNode node)
+        public void SaveSiteNode(ResourceNode node)
         {
             using(var conn = CreateConnection())
             {
@@ -141,7 +141,7 @@ namespace Kui.Core.Resource.Persistence.Sqlite
             using(var conn = CreateConnection())
             {
                 var pathmode = $"{path}%";
-                var nodes = conn.Query<SiteNode>(
+                var nodes = conn.Query<ResourceNode>(
                     "select * from base_node where path like @path " +
                     "order by update_time desc, create_time desc", 
                     new { path = pathmode });

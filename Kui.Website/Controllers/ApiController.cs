@@ -30,7 +30,7 @@ namespace Kui.Website.Controllers
         }
         public IActionResult GetSiteNode(string path)
         {
-            return Json(_resourceService.Get<SiteNode>(path));
+            return Json(_resourceService.Get<ResourceNode>(path));
         }
         public IActionResult SaveSiteNode()
         {
@@ -47,14 +47,14 @@ namespace Kui.Website.Controllers
         {
             return JsonConvert.DeserializeObject(ReadJsonString());
         }
-        SiteNode ReadNodeFromJson(string json)
+        ResourceNode ReadNodeFromJson(string json)
         {
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
 
-            Type type = typeof(SiteNode).Assembly.GetType("Kui.Core.Resource.Node."+jsonObj.type.Value);
+            Type type = typeof(ResourceNode).Assembly.GetType("Kui.Core.Resource.Node."+jsonObj.type.Value);
             JToken data = jsonObj.data;
 
-            var instance = type.Assembly.CreateInstance(type.ToString()) as SiteNode;
+            var instance = type.Assembly.CreateInstance(type.ToString()) as ResourceNode;
             var porps = type.GetProperties(
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
             foreach(var prop in porps)

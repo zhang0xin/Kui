@@ -14,11 +14,11 @@ namespace Kui.Core.Resource
         {
             return $"{parentPath}{accessor.PathSeparator}{IdentityGenerator.NewGuid()}";
         }
-        public static IEnumerable<T> Get<T>(string path) where T:SiteNode
+        public static IEnumerable<T> Get<T>(string path) where T:ResourceNode
         {
             return accessor.GetSiteNode<T>(path);
         }
-        public static void Save<T>(T node) where T:SiteNode
+        public static void Save<T>(T node) where T:ResourceNode
         {
             accessor.SaveSiteNode(node);
         }
@@ -31,7 +31,7 @@ namespace Kui.Core.Resource
             throw new NotImplementedException();
         }
     }
-    public class ResourceManager<T> where T:SiteNode
+    public class ResourceManager<T> where T:ResourceNode
     {
         public string NewChildPath(string parentPath)
         {

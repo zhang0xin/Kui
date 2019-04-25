@@ -10,8 +10,8 @@ namespace Kui.Core.Resource.Persistence
     public interface DataAccesser 
     {
         string PathSeparator {get; set;}
-        void SaveSiteNode(SiteNode node);
-        IEnumerable<T> GetSiteNode<T>(string path) where T:SiteNode;
+        void SaveSiteNode(ResourceNode node);
+        IEnumerable<T> GetSiteNode<T>(string path) where T:ResourceNode;
         void RemoveSiteNode(string path);
     }
 }

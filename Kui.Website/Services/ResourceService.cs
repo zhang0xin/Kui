@@ -18,11 +18,11 @@ namespace Kui.Website.Services
         {
             return ResourceManager.NewChildPath(parentPath);
         }
-        public IEnumerable<T> Get<T>(string path) where T:SiteNode
+        public IEnumerable<T> Get<T>(string path) where T:ResourceNode
         {
             return ResourceManager.Get<T>(path);
         }
-        public void Save<T>(T node) where T:SiteNode
+        public void Save<T>(T node) where T:ResourceNode
         {
             ResourceManager.Save(node);
         }

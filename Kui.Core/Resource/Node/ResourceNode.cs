@@ -1,8 +1,9 @@
 using System;
+using System.Collections.Generic;
 
 namespace Kui.Core.Resource.Node
 {
-    public class SiteNode
+    public class ResourceNode
     {
         public ulong  Key {get; set;}
         public DateTime CreateTime {get; set;}
