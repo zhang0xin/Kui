@@ -33,11 +33,10 @@ namespace Kui.Core.Resource.Persistence.Sqlite
                 object param = new {path};
                 if (path.EndsWith(PathSeparator))
                 {
-                    sql = "select * from ({table}) t where t.path like @path1 and t.path not like @path2";
-                    param = new{ path1=$"{path}_%", path2="{path}_%/%"};
+                    sql = $"select * from ({table}) t where t.Path like @path1 and t.Path not like @path2";
+                    param = new{ path1=$"{path}_%", path2=$"{path}_%/%"};
                 }
-                sql += " order by update_time desc, create_time desc";
-
+                sql += " order by UpdateTime desc, CreateTime desc";
                 return conn.Query<T>(sql, param);
             }
         }
@@ -104,8 +103,7 @@ namespace Kui.Core.Resource.Persistence.Sqlite
                 }
                 foreach(var prop in props)
                 {
-                    if (prop == idprop) continue;
-                    
+                    //if (prop == idprop) continue;
                     var value = prop.GetValue(obj);
                     var param = new
                     {
@@ -127,7 +125,7 @@ namespace Kui.Core.Resource.Persistence.Sqlite
                     {
                         conn.Execute(
                             "insert into Objects (Id, ObjectId, Property, Value, Type) "+
-                            "values(@Id, @ObjectId, @Name, @Value, @Type)",
+                            "values(@Id, @ObjectId, @Property, @Value, @Type)",
                             param
                         );
                     }
@@ -143,12 +141,11 @@ namespace Kui.Core.Resource.Persistence.Sqlite
         string GetObjectsTableSql<T>()
         {
             Type type = typeof(T);
-            var props = type.GetProperties(
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+            var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
             var builder = new StringBuilder();
             foreach(var prop in props)
             {
-                builder.Append($", group_concat(case Property when '{prop.Name}' then Value else NULL end");
+                builder.Append($", group_concat(case Property when '{prop.Name}' then Value else NULL end) as {prop.Name}");
             }
             return $" select ObjectId {builder} from Objects group by ObjectId ";
         }
@@ -180,13 +177,13 @@ namespace Kui.Core.Resource.Persistence.Sqlite
                     type            text        not null
                 );
                 create table Objects
-                {
+                (
                     Id          integer     primary key,
                     ObjectId    integer     not null,
                     Property    text        not null,
                     Value       text,
                     Type        text
-                };
+                );
             ";
             var connection = CreateConnection();
             connection.Execute(sql);

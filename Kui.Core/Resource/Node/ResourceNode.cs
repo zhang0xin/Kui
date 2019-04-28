@@ -5,6 +5,7 @@ namespace Kui.Core.Resource.Node
 {
     public class ResourceNode
     {
+        [Identity]
         public ulong  Key {get; set;}
         public DateTime CreateTime {get; set;}
         public DateTime UpdateTime {get; set;}
